@@ -1,3 +1,4 @@
+
 import streamlit as st
 import pandas as pd
 import plotly.express as px
@@ -43,17 +44,19 @@ MUTATIONS = {
         "exon": "19",
         "type": "Deletion",
         "description": (
-            "A group of mutations involving the deletion of genetic "
-            "material in exon 19 of the EGFR gene."
+            "This mutation involves a small section of genetic "
+            "material being missing from exon 19 of the EGFR gene."
         ),
         "biology": (
-            "These alterations can activate EGFR signalling, which "
-            "can promote cell growth and survival."
+            "This change can make EGFR signalling more active than "
+            "normal. As a result, cells may receive signals to keep "
+            "growing and surviving when they shouldn't."
         ),
         "resistance": (
-            "Some cancers with this mutation can develop resistance "
-            "to EGFR-targeted treatments over time. The mechanisms "
-            "of resistance can differ between tumours."
+            "Over time, some cancers with this mutation can become "
+            "less responsive to EGFR-targeted treatments. This can "
+            "happen because cancer cells develop additional changes, "
+            "although the reasons can be different in each tumour."
         )
     },
 
@@ -62,17 +65,18 @@ MUTATIONS = {
         "exon": "21",
         "type": "Substitution",
         "description": (
-            "A specific change in exon 21 of EGFR, where leucine "
-            "is replaced by arginine at position 858."
+            "L858R is a change in exon 21 of the EGFR gene. It happens "
+            "when one part of the EGFR protein, called leucine, is "
+            "replaced by another, called arginine, at position 858."
         ),
         "biology": (
-            "This alteration can activate EGFR signalling and "
-            "encourage cancer cell growth."
+            "This change can switch on EGFR signalling too much, "
+            "encouraging cancer cells to grow and survive."
         ),
         "resistance": (
-            "Tumours with L858R can develop acquired resistance "
-            "to targeted therapies. Additional genetic alterations "
-            "may contribute to this process."
+            "Some tumours with L858R can eventually become resistant "
+            "to targeted treatments. Extra genetic changes may help "
+            "cancer cells keep growing even when treatment is being used."
         )
     },
 
@@ -81,16 +85,19 @@ MUTATIONS = {
         "exon": "20",
         "type": "Substitution",
         "description": (
-            "A change in exon 20 of EGFR, where threonine is "
-            "replaced by methionine at position 790."
+            "T790M is a change in exon 20 of the EGFR gene. It happens "
+            "when threonine is replaced by methionine at position 790 "
+            "in the EGFR protein."
         ),
         "biology": (
-            "This alteration changes the structure and activity "
-            "of the EGFR protein."
+            "This mutation changes the EGFR protein and can affect "
+            "how it works. It is especially important because it can "
+            "help cancer cells avoid the effects of some treatments."
         ),
         "resistance": (
-            "T790M is a recognised mechanism of acquired resistance "
-            "to some earlier EGFR inhibitors."
+            "T790M is a well-known reason why some cancers become "
+            "resistant to earlier EGFR inhibitors. In other words, "
+            "a treatment that worked before may become less effective."
         )
     }
 }
@@ -103,7 +110,7 @@ st.sidebar.title("🧬 EGFR Explorer")
 st.sidebar.caption("Precision Cancer Medicine")
 
 page = st.sidebar.radio(
-    "INDEX",
+    "EXPLORE",
     [
         "Overview",
         "Mutation Explorer",
@@ -115,8 +122,8 @@ page = st.sidebar.radio(
 
 st.sidebar.divider()
 st.sidebar.info(
-    "A website focused on EGFR mutations "
-    "in non-small cell lung cancer."
+    "Learn how changes in the EGFR gene are connected "
+    "to non-small cell lung cancer."
 )
 
 # -----------------------------------------
@@ -128,14 +135,16 @@ if page == "Overview":
     st.title("EGFR Precision Explorer")
 
     st.markdown(
-        "### Understanding genetic mutations and treatment "
-        "resistance in lung cancer"
+        "### Exploring how gene mutations can affect lung cancer "
+        "and its treatment"
     )
 
     st.write(
-        "This shows how changes "
-        "in the EGFR gene can influence the biology of non-small "
-        "cell lung cancer (NSCLC) and its response to targeted treatments."
+        "The EGFR gene plays an important role in how cells grow. "
+        "But what happens when this gene changes? This website "
+        "explores how EGFR mutations can contribute to non-small "
+        "cell lung cancer (NSCLC), and why some treatments may "
+        "stop working over time."
     )
 
     st.divider()
@@ -144,35 +153,36 @@ if page == "Overview":
 
     col1.metric("Gene of interest", "EGFR")
     col2.metric("Cancer type", "NSCLC")
-    col3.metric("Mutations included", len(MUTATIONS))
+    col3.metric("Mutations explored", len(MUTATIONS))
 
-    st.subheader("Explore the platform")
+    st.subheader("What can you explore?")
 
     col1, col2 = st.columns(2)
 
     with col1:
         st.info(
             "**Mutation Explorer**\n\n"
-            "Investigate selected EGFR mutations and their "
-            "biological effects."
+            "Choose an EGFR mutation and find out what changes "
+            "in the gene and how this can affect cells."
         )
 
         st.info(
             "**Genomic Data**\n\n"
-            "Upload a research dataset and visualise its "
-            "genetic information."
+            "Upload a research dataset and create charts to see "
+            "which mutations appear in the samples."
         )
 
     with col2:
         st.info(
             "**Treatment Resistance**\n\n"
-            "Explore how genetic alterations can be associated "
-            "with changes in treatment response."
+            "Find out why some cancer cells can become less "
+            "sensitive to targeted treatments over time."
         )
 
         st.info(
             "**Research Sources**\n\n"
-            "Access scientific databases and further reading."
+            "Check out scientific databases and websites where "
+            "you can learn more about EGFR and cancer."
         )
 
     st.divider()
@@ -186,12 +196,12 @@ elif page == "Mutation Explorer":
     st.title("Mutation Explorer")
 
     st.write(
-        "Select a genetic alteration to explore its "
-        "characteristics and possible relevance to treatment."
+        "Not all EGFR mutations are the same. Choose one below "
+        "to explore what it changes and why it matters."
     )
 
     selected = st.selectbox(
-        "Select an EGFR mutation",
+        "Choose an EGFR mutation",
         list(MUTATIONS.keys())
     )
 
@@ -205,20 +215,24 @@ elif page == "Mutation Explorer":
     col2.metric("Exon", mutation["exon"])
     col3.metric("Mutation type", mutation["type"])
 
-    st.subheader("Mutation description")
+    st.subheader("What is this mutation?")
+
     st.write(mutation["description"])
 
-    st.subheader("Biological effect")
+    st.subheader("What happens inside the cell?")
+
     st.write(mutation["biology"])
 
-    st.subheader("Treatment resistance")
+    st.subheader("Can it affect treatment?")
+
     st.warning(mutation["resistance"])
 
     st.divider()
 
     st.caption(
-        "These are simplified scientific summaries. "
-        "Individual treatment responses depend on multiple factors."
+        "These explanations simplify some complex scientific ideas. "
+        "Treatment responses can vary between tumours and depend "
+        "on several factors."
     )
 
 # -----------------------------------------
@@ -227,19 +241,20 @@ elif page == "Mutation Explorer":
 
 elif page == "Genomic Data":
 
-    st.title("Genomic Data Analysis")
+    st.title("Genomic Data")
 
     st.write(
-        "Upload a CSV research dataset to explore mutation "
-        "patterns in a group of samples."
+        "Here you can upload a CSV research dataset and explore "
+        "the genetic information it contains. The charts will "
+        "update based on the data you upload."
     )
 
     st.markdown("""
-    **Expected CSV columns:**
+    **What should your CSV file include?**
 
-    - `sample_id`: unique sample identifier
-    - `mutation`: genetic alteration
-    - `treatment_response`: optional response category
+    - `sample_id`: an ID for each sample
+    - `mutation`: the genetic mutation found in that sample
+    - `treatment_response`: an optional category showing the recorded treatment response
     """)
 
     uploaded_file = st.file_uploader(
@@ -256,27 +271,32 @@ elif page == "Genomic Data":
 
             if not required_columns.issubset(df.columns):
                 st.error(
-                    "Your file must contain sample_id and mutation columns."
+                    "Your file needs to include both sample_id "
+                    "and mutation columns. Please check it and try again."
                 )
 
             elif df.empty:
-                st.warning("The uploaded dataset is empty.")
+                st.warning(
+                    "This dataset looks empty. Try uploading a file "
+                    "that contains some data."
+                )
 
             else:
-                st.success("Dataset uploaded successfully!")
+                st.success("Your dataset has been uploaded!")
 
-                st.subheader("Dataset preview")
+                st.subheader("Take a look at your data")
+
                 st.dataframe(df.head(20), use_container_width=True)
 
                 col1, col2 = st.columns(2)
 
-                col1.metric("Rows", len(df))
+                col1.metric("Total records", len(df))
                 col2.metric(
-                    "Unique mutations",
+                    "Different mutations",
                     df["mutation"].nunique()
                 )
 
-                st.subheader("Mutation distribution")
+                st.subheader("Which mutations appear most often?")
 
                 counts = (
                     df["mutation"]
@@ -292,7 +312,7 @@ elif page == "Genomic Data":
                     x="Mutation",
                     y="Number of records",
                     color="Mutation",
-                    title="Mutation frequency in uploaded dataset"
+                    title="Mutation frequency in your dataset"
                 )
 
                 st.plotly_chart(fig, use_container_width=True)
@@ -321,7 +341,7 @@ elif page == "Genomic Data":
                             y="Number of records",
                             color="treatment_response",
                             barmode="group",
-                            title="Recorded responses by mutation"
+                            title="Recorded treatment responses"
                         )
 
                         st.plotly_chart(
@@ -330,12 +350,16 @@ elif page == "Genomic Data":
                         )
 
                     else:
-                        st.info("No complete treatment response records.")
+                        st.info(
+                            "There aren't any complete treatment "
+                            "response records in this dataset."
+                        )
 
                 st.caption(
-                    "Charts describe the uploaded dataset only. "
-                    "They do not establish causation or predict "
-                    "an individual patient's response."
+                    "These charts only show what is in the uploaded "
+                    "dataset. They cannot prove that a mutation causes "
+                    "a certain response or predict how a patient will "
+                    "respond to treatment."
                 )
 
         except Exception as error:
@@ -343,8 +367,8 @@ elif page == "Genomic Data":
 
     else:
         st.info(
-            "Upload a research dataset to activate the genomic "
-            "visualisations. No patient data is included by default."
+            "Upload a research dataset to see the charts and explore "
+            "its mutations. No patient data is included in this app."
         )
 
 # -----------------------------------------
@@ -356,12 +380,13 @@ elif page == "Treatment Resistance":
     st.title("Treatment Resistance")
 
     st.write(
-        "Explore the relationship between EGFR mutations "
-        "and resistance to targeted treatments."
+        "Targeted treatments are designed to block specific changes "
+        "in cancer cells. But sometimes, these cells find ways around "
+        "the treatment. This is called treatment resistance."
     )
 
     selected = st.selectbox(
-        "Choose a mutation",
+        "Choose a mutation to explore",
         list(MUTATIONS.keys())
     )
 
@@ -371,22 +396,22 @@ elif page == "Treatment Resistance":
 
     st.write(mutation["resistance"])
 
-    st.subheader("Why is this important?")
+    st.subheader("Why does treatment resistance happen?")
 
     st.markdown("""
-    1. EGFR mutations can change how the EGFR protein functions.
-    2. Targeted treatments are designed to block specific
-       signalling pathways.
-    3. Additional genetic changes can sometimes allow cancer
-       cells to continue growing despite treatment.
-    4. Understanding these changes is important for research
-       into treatment resistance.
+    1. EGFR mutations can change how the EGFR protein works.
+    2. Targeted treatments try to block the signals that tell cancer
+       cells to grow.
+    3. Sometimes, cancer cells develop extra genetic changes that
+       help them keep growing despite the treatment.
+    4. Researchers study these changes to understand why treatments
+       stop working and how new treatment options might be developed.
     """)
 
     st.warning(
-        "This section explains established biological concepts. "
-        "It does not predict whether a particular tumour will "
-        "respond to treatment."
+        "This section explains how treatment resistance can happen. "
+        "It does not predict whether a specific tumour will respond "
+        "to a treatment."
     )
 
 # -----------------------------------------
@@ -398,8 +423,10 @@ elif page == "Research Sources":
     st.title("Research Sources")
 
     st.write(
-        "These scientific resources can help verify mutation "
-        "information and find real genomic datasets."
+        "I used scientific resources to explore EGFR mutations "
+        "and understand their connection to lung cancer. "
+        "You can also visit these websites to find more information "
+        "and check scientific data."
     )
 
     st.markdown("""
@@ -410,14 +437,15 @@ elif page == "Research Sources":
     - [cBioPortal – Cancer genomics](https://www.cbioportal.org/)
     - [COSMIC – Cancer mutation database](https://cancer.sanger.ac.uk/cosmic)
 
-    ### Research inspiration
+    ### Project inspiration
 
     - [SMART Precision Cancer Medicine](https://apps.smarthealthit.org/app/smart-precision-cancer-medicine)
     """)
 
     st.info(
-        "Use scientific publications and database records to "
-        "verify the information before drawing conclusions."
+        "Scientific information can be complex, so it is important "
+        "to check reliable sources and compare information before "
+        "making conclusions."
     )
 
 # -----------------------------------------
@@ -427,5 +455,5 @@ elif page == "Research Sources":
 st.sidebar.divider()
 
 st.sidebar.caption(
-    "EGFR Precision Explorer | Educational prototype"
+    "EGFR Precision Explorer | Educational project"
 )
