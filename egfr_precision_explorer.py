@@ -250,12 +250,6 @@ elif page == "Genomic Data":
             "the full genetic sequencing data."
     )
 
-    st.info(
-        "**Before you start:** This example uses cancer cells grown in a lab, "
-        "not samples from patients. You can upload another CSV using the "
-        "same column names."
-    )
-
     st.markdown("### What should your CSV include?")
     st.write(
         "- `sample_id`: the sample's ID"
