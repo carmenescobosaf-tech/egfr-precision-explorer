@@ -1,10 +1,9 @@
-
 import streamlit as st
 import pandas as pd
 import plotly.express as px
 
 # -----------------------------------------
-# PAGE CONFIGURATION
+# MAIN PAGE 
 # -----------------------------------------
 
 st.set_page_config(
@@ -135,14 +134,14 @@ if page == "Overview":
     st.title("EGFR Precision Explorer")
 
     st.markdown(
-        "### Exploring how gene mutations can affect lung cancer "
+        "### How gene mutations can affect lung cancer "
         "and its treatment"
     )
 
     st.write(
-        "The EGFR gene plays an important role in how cells grow. "
+        "The EGFR gene is really important in how cells grow. "
         "But what happens when this gene changes? This website "
-        "explores how EGFR mutations can contribute to non-small "
+        "shows how EGFR mutations can contribute to non-small "
         "cell lung cancer (NSCLC), and why some treatments may "
         "stop working over time."
     )
@@ -153,9 +152,9 @@ if page == "Overview":
 
     col1.metric("Gene of interest", "EGFR")
     col2.metric("Cancer type", "NSCLC")
-    col3.metric("Mutations explored", len(MUTATIONS))
+    col3.metric("Mutations", len(MUTATIONS))
 
-    st.subheader("What can you explore?")
+    st.subheader("What can you learn about EGFR?")
 
     col1, col2 = st.columns(2)
 
