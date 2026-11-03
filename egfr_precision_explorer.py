@@ -43,12 +43,12 @@ MUTATIONS = {
         "exon": "19",
         "type": "Deletion",
         "description": (
-            "This mutation involves a small section of genetic "
-            "material being missing from exon 19 of the EGFR gene."
+            "This mutation is a small section of the DNA"
+            "strand being missing from exon 19 of the EGFR gene."
         ),
         "biology": (
             "This change can make EGFR signalling more active than "
-            "normal. As a result, cells may receive signals to keep "
+            "normal. Because of this, cells may receive signals to keep "
             "growing and surviving when they shouldn't."
         ),
         "resistance": (
@@ -74,7 +74,7 @@ MUTATIONS = {
         ),
         "resistance": (
             "Some tumours with L858R can eventually become resistant "
-            "to targeted treatments. Extra genetic changes may help "
+            "to targeted treatments. Other new genetic mutations can help "
             "cancer cells keep growing even when treatment is being used."
         )
     },
@@ -90,7 +90,7 @@ MUTATIONS = {
         ),
         "biology": (
             "This mutation changes the EGFR protein and can affect "
-            "how it works. It is especially important because it can "
+            "how it works. It is important because it can "
             "help cancer cells avoid the effects of some treatments."
         ),
         "resistance": (
@@ -174,8 +174,8 @@ if page == "Overview":
     with col2:
         st.info(
             "**Treatment Resistance**\n\n"
-            "Find out why some cancer cells can become less "
-            "sensitive to targeted treatments over time."
+            "Find out why some cancer cells can become "
+            "resistant to targeted treatments, making it harder to treat."
         )
 
         st.info(
@@ -196,7 +196,7 @@ elif page == "Mutation Explorer":
 
     st.write(
         "Not all EGFR mutations are the same. Choose one below "
-        "to explore what it changes and why it matters."
+        "to learn what it changes and why it matters."
     )
 
     selected = st.selectbox(
@@ -243,7 +243,7 @@ elif page == "Genomic Data":
     st.title("Genomic Data")
 
     st.write(
-        "Here you can upload a CSV research dataset and explore "
+        "Here you can upload a CSV research dataset and look at "
         "the genetic information it contains. The charts will "
         "update based on the data you upload."
     )
