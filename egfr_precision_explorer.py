@@ -1,6 +1,5 @@
 import streamlit as st
 import pandas as pd
-import plotly.express as px
 
 # -----------------------------------------
 # MAIN PAGE 
@@ -243,18 +242,38 @@ elif page == "Genomic Data":
     st.title("Genomic Data")
 
     st.write(
-        "Here you can upload a CSV research dataset and look at "
-        "the genetic information it contains. The charts will "
-        "update based on the data you upload."
+        "Explore a small research dataset and find out what it can tell us "
+        "about EGFR mutations and treatment resistance."
     )
 
-    st.markdown("""
-    **What should your CSV file include?**
+    with st.expander("Where does this example dataset come from?"):
+        st.write(
+            "The example CSV is based on study GSE156054, shared on NCBI GEO. "
+            "The study looked at EGFR-mutated lung cancer cells and compared "
+            "original cell lines with versions selected for treatment resistance."
+        )
+        st.markdown(
+            "[View the original study on NCBI GEO]"
+            "(https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE156054)"
+        )
+        st.write(
+            "The CSV used here is a short summary of six samples. It is not "
+            "the full genetic sequencing data."
+        )
 
-    - `sample_id`: an ID for each sample
-    - `mutation`: the genetic mutation found in that sample
-    - `treatment_response`: an optional category showing the recorded treatment response
-    """)
+    st.info(
+        "**Before you start:** This example uses cancer cells grown in a lab, "
+        "not samples from patients. You can upload another CSV using the "
+        "same column names."
+    )
+
+    st.markdown("### What should your CSV include?")
+    st.write(
+        "- `sample_id`: the sample's ID"
+        "\n- `mutation`: the EGFR mutation"
+        "\n- `treatment_response`: for example, Sensitive or Resistant"
+        "\n- Extra columns, such as `cell_line` and `treatment`, can add more detail."
+    )
 
     uploaded_file = st.file_uploader(
         "Upload your genomic CSV file",
@@ -265,100 +284,182 @@ elif page == "Genomic Data":
 
         try:
             df = pd.read_csv(uploaded_file)
+            df.columns = df.columns.str.strip()
 
             required_columns = {"sample_id", "mutation"}
 
             if not required_columns.issubset(df.columns):
                 st.error(
-                    "Your file needs to include both sample_id "
-                    "and mutation columns. Please check it and try again."
+                    "Your file needs both sample_id and mutation columns. "
+                    "Please check the column names and upload it again."
                 )
 
             elif df.empty:
-                st.warning(
-                    "This dataset looks empty. Try uploading a file "
-                    "that contains some data."
-                )
+                st.warning("This dataset is empty. Please upload a file with data.")
 
             else:
                 st.success("Your dataset has been uploaded!")
 
-                st.subheader("Take a look at your data")
-
-                st.dataframe(df.head(20), use_container_width=True)
-
-                col1, col2 = st.columns(2)
-
-                col1.metric("Total records", len(df))
-                col2.metric(
-                    "Different mutations",
-                    df["mutation"].nunique()
-                )
-
-                st.subheader("Which mutations appear most often?")
-
-                counts = (
-                    df["mutation"]
-                    .fillna("Unknown")
-                    .value_counts()
-                    .reset_index()
-                )
-
-                counts.columns = ["Mutation", "Number of records"]
-
-                fig = px.bar(
-                    counts,
-                    x="Mutation",
-                    y="Number of records",
-                    color="Mutation",
-                    title="Mutation frequency in your dataset"
-                )
-
-                st.plotly_chart(fig, use_container_width=True)
-
+                # Clean the main columns so the summaries are easier to read.
+                df["mutation"] = df["mutation"].fillna("Unknown").astype(str).str.strip()
                 if "treatment_response" in df.columns:
-
-                    st.subheader("Treatment response by mutation")
-
-                    response_data = df.dropna(
-                        subset=["mutation", "treatment_response"]
+                    df["treatment_response"] = (
+                        df["treatment_response"]
+                        .fillna("Not recorded")
+                        .astype(str)
+                        .str.strip()
                     )
 
-                    if not response_data.empty:
+                st.markdown("### 1. Dataset at a glance")
+                col1, col2, col3 = st.columns(3)
+                col1.metric("Total samples", len(df))
+                col2.metric("Different mutation labels", df["mutation"].nunique())
+                if "treatment_response" in df.columns:
+                    col3.metric(
+                        "Response groups",
+                        df["treatment_response"].nunique()
+                    )
+                else:
+                    col3.metric("Response information", "Not included")
 
-                        response_counts = (
-                            response_data.groupby(
-                                ["mutation", "treatment_response"]
-                            )
-                            .size()
-                            .reset_index(name="Number of records")
-                        )
+                st.write(
+                    "Each row represents one sample. The mutation and response "
+                    "columns help us compare the samples."
+                )
 
-                        fig2 = px.bar(
-                            response_counts,
-                            x="mutation",
-                            y="Number of records",
-                            color="treatment_response",
-                            barmode="group",
-                            title="Recorded treatment responses"
-                        )
+                st.markdown("### 2. Explore the samples")
+                display_columns = [
+                    col for col in
+                    ["sample_id", "cell_line", "mutation", "treatment_response", "treatment"]
+                    if col in df.columns
+                ]
+                if display_columns:
+                    # A plain text preview avoids relying on the interactive
+                    # dataframe viewer for this small educational dataset.
+                    st.code(
+                        df[display_columns].head(20).to_string(index=False),
+                        language="text"
+                    )
 
-                        st.plotly_chart(
-                            fig2,
-                            use_container_width=True
-                        )
+                st.markdown("### 3. Which mutations appear in the dataset?")
+                mutation_counts = (
+                    df["mutation"]
+                    .value_counts()
+                    .rename_axis("Mutation")
+                    .to_frame("Number of samples")
+                )
+                st.bar_chart(mutation_counts)
 
-                    else:
-                        st.info(
-                            "There aren't any complete treatment "
-                            "response records in this dataset."
-                        )
+                most_common = mutation_counts["Number of samples"].max()
+                common_mutations = mutation_counts[
+                    mutation_counts["Number of samples"] == most_common
+                ].index.tolist()
+
+                if len(common_mutations) == 1:
+                    st.write(
+                        f"**What this means:** {common_mutations[0]} is the "
+                        f"most common mutation label in this uploaded dataset, "
+                        f"appearing in {most_common} sample(s)."
+                    )
+                else:
+                    st.write(
+                        f"**What this means:** {', '.join(common_mutations)} "
+                        f"are tied as the most common mutation labels, with "
+                        f"{most_common} sample(s) each."
+                    )
 
                 st.caption(
-                    "These charts only show what is in the uploaded "
-                    "dataset. They cannot prove that a mutation causes "
-                    "a certain response or predict how a patient will "
-                    "respond to treatment."
+                    "This only describes the samples in your file. It does not "
+                    "show how common these mutations are in all people with lung cancer."
+                )
+
+                if "treatment_response" in df.columns:
+                    st.markdown("### 4. Treatment response")
+                    response_data = df[
+                        df["treatment_response"].ne("Not recorded")
+                    ]
+
+                    if not response_data.empty:
+                        response_table = pd.crosstab(
+                            response_data["mutation"],
+                            response_data["treatment_response"]
+                        )
+                        st.bar_chart(response_table)
+
+                        st.write(
+                            "The chart counts how many samples in each mutation "
+                            "group have each response label."
+                        )
+
+                        response_totals = (
+                            response_data["treatment_response"]
+                            .value_counts()
+                        )
+                        st.write("**Response labels in this file:**")
+                        for label, number in response_totals.items():
+                            st.write(f"- {label}: {number} sample(s)")
+                    else:
+                        st.info(
+                            "There are no recorded treatment responses to compare "
+                            "in this dataset."
+                        )
+                else:
+                    st.info(
+                        "Your CSV does not have a treatment_response column, "
+                        "so this section cannot compare treatment responses."
+                    )
+
+                if "cell_line" in df.columns:
+                    st.markdown("### 5. Compare related cell lines")
+                    cell_lines = sorted(
+                        df["cell_line"].dropna().astype(str).unique().tolist()
+                    )
+                    if cell_lines:
+                        chosen_line = st.selectbox(
+                            "Choose a cell line",
+                            cell_lines
+                        )
+                        related = df[
+                            df["cell_line"].astype(str).str.contains(
+                                chosen_line, case=False, na=False
+                            )
+                        ]
+                        st.write(
+                            f"These row(s) are linked to **{chosen_line}** "
+                            "in the cell_line column:"
+                        )
+                        comparison_columns = [
+                            col for col in
+                            ["sample_id", "cell_line", "mutation",
+                             "treatment_response", "treatment"]
+                            if col in related.columns
+                        ]
+                        st.code(
+                            related[comparison_columns].to_string(index=False),
+                            language="text"
+                        )
+                        st.write(
+                            "**How to read this:** Some studies compare an original "
+                            "cell line with a version selected to resist a treatment. "
+                            "That comparison can help researchers study resistance."
+                        )
+
+                st.markdown("### 6. What can we learn from this dataset?")
+                st.write(
+                    "This small dataset is useful for seeing that the study includes "
+                    "different EGFR mutation labels and both treatment-sensitive and "
+                    "treatment-resistant cell samples. It gives an example of how "
+                    "researchers can compare cell lines."
+                )
+                st.write(
+                    "However, the dataset alone does not prove which genetic change "
+                    "caused resistance. It also cannot predict how a patient would "
+                    "respond to a treatment."
+                )
+
+                st.caption(
+                    "This is an educational exploration of research data, not a "
+                    "medical tool. Results depend on the file that is uploaded."
                 )
 
         except Exception as error:
@@ -366,8 +467,8 @@ elif page == "Genomic Data":
 
     else:
         st.info(
-            "Upload a research dataset to see the charts and explore "
-            "its mutations. No patient data is included in this app."
+            "Upload a CSV file to explore its samples, mutations and treatment "
+            "response information. No patient data is included in this app."
         )
 
 # -----------------------------------------
@@ -454,5 +555,5 @@ elif page == "Research Sources":
 st.sidebar.divider()
 
 st.sidebar.caption(
-    "EGFR Precision Explorer | Educational project"
+    "EGFR Precision Explorer"
 )
