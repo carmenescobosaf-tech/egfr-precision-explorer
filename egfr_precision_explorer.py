@@ -226,7 +226,7 @@ elif page == "Mutation Explorer":
     st.divider()
 
     st.caption(
-        "These explanations are simplified to make the science easier "
+        "These explanations are simplified to make it easier "
         "to understand. The way a tumour responds to treatment can vary."
     )
 
@@ -506,11 +506,6 @@ elif page == "Genomic Data":
                     "a patient would respond to a treatment."
                 )
 
-                st.caption(
-                    "This is a student science project, not a medical tool. "
-                    "The results depend on the CSV file that is uploaded."
-                )
-
         except Exception as error:
             st.error(f"Could not read the CSV file: {error}")
 
@@ -556,11 +551,6 @@ elif page == "Treatment Resistance":
        working and how new treatments could be developed.
     """)
 
-    st.warning(
-        "This section explains how treatment resistance can happen. "
-        "It cannot predict if a specific tumour will respond to treatment."
-    )
-
 # -----------------------------------------
 # RESEARCH SOURCES
 # -----------------------------------------
@@ -587,11 +577,6 @@ elif page == "Research Sources":
 
     - [SMART Precision Cancer Medicine](https://apps.smarthealthit.org/app/smart-precision-cancer-medicine)
     """)
-
-    st.info(
-        "It is always important to check where scientific information "
-        "comes from and use reliable sources."
-    )
 
 # -----------------------------------------
 # FOOTER
