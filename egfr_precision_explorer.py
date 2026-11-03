@@ -137,7 +137,7 @@ if page == "Overview":
     )
 
     st.write(
-        "The EGFR gene plays an important part in how cells grow. "
+        "The EGFR gene is really important in how cells grow. "
         "But what happens when this gene changes? This website looks "
         "at how EGFR mutations are linked to non-small cell lung cancer "
         "(NSCLC), and why some treatments can stop working over time."
@@ -171,14 +171,14 @@ if page == "Overview":
     with col2:
         st.info(
             "**Treatment Resistance**\n\n"
-            "Find out why some cancer cells can stop responding "
+            "Why some cancer cells can stop responding "
             "to certain treatments."
         )
 
         st.info(
             "**Research Sources**\n\n"
-            "Find the scientific websites and databases used "
-            "for this project."
+            "Some scientific websites and databases that are "
+            "useful to understand better about this mutation and more."
         )
 
     st.divider()
