@@ -245,10 +245,10 @@ elif page == "Genomic Data":
         "Learn from a small research dataset and find out what it can tell us "
         "about EGFR mutations and treatment resistance."
     )
-        st.write(
+    st.write(
             "The CSV used here is a short summary of six samples. It is not "
             "the full genetic sequencing data."
-        )
+    )
 
     st.info(
         "**Before you start:** This example uses cancer cells grown in a lab, "
