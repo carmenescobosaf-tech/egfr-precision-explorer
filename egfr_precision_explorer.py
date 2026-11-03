@@ -1,8 +1,9 @@
+
 import streamlit as st
 import pandas as pd
 
 # -----------------------------------------
-# MAIN PAGE 
+# MAIN PAGE
 # -----------------------------------------
 
 st.set_page_config(
@@ -42,19 +43,18 @@ MUTATIONS = {
         "exon": "19",
         "type": "Deletion",
         "description": (
-            "This mutation is a small section of the DNA"
-            "strand being missing from exon 19 of the EGFR gene."
+            "This mutation happens when a small part of the DNA "
+            "in exon 19 of the EGFR gene is missing."
         ),
         "biology": (
-            "This change can make EGFR signalling more active than "
-            "normal. Because of this, cells may receive signals to keep "
-            "growing and surviving when they shouldn't."
+            "This change can make EGFR send too many growth signals. "
+            "Because of this, cells may keep growing and surviving "
+            "when they normally shouldn't."
         ),
         "resistance": (
-            "Over time, some cancers with this mutation can become "
-            "less responsive to EGFR-targeted treatments. This can "
-            "happen because cancer cells develop additional changes, "
-            "although the reasons can be different in each tumour."
+            "Some cancers with this mutation can become less sensitive "
+            "to EGFR-targeted treatments over time. This can happen when "
+            "cancer cells develop other changes."
         )
     },
 
@@ -68,13 +68,13 @@ MUTATIONS = {
             "replaced by another, called arginine, at position 858."
         ),
         "biology": (
-            "This change can switch on EGFR signalling too much, "
-            "encouraging cancer cells to grow and survive."
+            "This change can make EGFR send too many signals, "
+            "which can help cancer cells grow and survive."
         ),
         "resistance": (
-            "Some tumours with L858R can eventually become resistant "
-            "to targeted treatments. Other new genetic mutations can help "
-            "cancer cells keep growing even when treatment is being used."
+            "Some cancers with L858R can become resistant to targeted "
+            "treatments over time. Other genetic changes can help "
+            "cancer cells keep growing even while treatment is being used."
         )
     },
 
@@ -88,14 +88,14 @@ MUTATIONS = {
             "in the EGFR protein."
         ),
         "biology": (
-            "This mutation changes the EGFR protein and can affect "
-            "how it works. It is important because it can "
-            "help cancer cells avoid the effects of some treatments."
+            "This change affects the EGFR protein and how it works. "
+            "It is important because it can help cancer cells avoid "
+            "the effects of some treatments."
         ),
         "resistance": (
-            "T790M is a well-known reason why some cancers become "
-            "resistant to earlier EGFR inhibitors. In other words, "
-            "a treatment that worked before may become less effective."
+            "T790M is a well-known reason why some cancers stop "
+            "responding to earlier EGFR inhibitors. This means that "
+            "a treatment that worked before may stop working as well."
         )
     }
 }
@@ -120,7 +120,7 @@ page = st.sidebar.radio(
 
 st.sidebar.divider()
 st.sidebar.info(
-    "Learn how changes in the EGFR gene are connected "
+    "Find out how changes in the EGFR gene are linked "
     "to non-small cell lung cancer."
 )
 
@@ -133,16 +133,14 @@ if page == "Overview":
     st.title("EGFR Precision Explorer")
 
     st.markdown(
-        "### How gene mutations can affect lung cancer "
-        "and its treatment"
+        "### How changes in a gene can affect lung cancer and its treatment"
     )
 
     st.write(
-        "The EGFR gene is really important in how cells grow. "
-        "But what happens when this gene changes? This website "
-        "shows how EGFR mutations can contribute to non-small "
-        "cell lung cancer (NSCLC), and why some treatments may "
-        "stop working over time."
+        "The EGFR gene plays an important part in how cells grow. "
+        "But what happens when this gene changes? This website looks "
+        "at how EGFR mutations are linked to non-small cell lung cancer "
+        "(NSCLC), and why some treatments can stop working over time."
     )
 
     st.divider()
@@ -153,34 +151,34 @@ if page == "Overview":
     col2.metric("Cancer type", "NSCLC")
     col3.metric("Mutations", len(MUTATIONS))
 
-    st.subheader("What can you learn about EGFR?")
+    st.subheader("What is on this website?")
 
     col1, col2 = st.columns(2)
 
     with col1:
         st.info(
             "**Mutation Explorer**\n\n"
-            "Choose an EGFR mutation and find out what changes "
-            "in the gene and how this can affect cells."
+            "Pick an EGFR mutation and see what changes in the gene "
+            "and how it can affect cells."
         )
 
         st.info(
             "**Genomic Data**\n\n"
-            "Upload a research dataset and create charts to see "
-            "which mutations appear in the samples."
+            "Upload a research dataset and use charts to see which "
+            "mutations are found in the samples."
         )
 
     with col2:
         st.info(
             "**Treatment Resistance**\n\n"
-            "Find out why some cancer cells can become "
-            "resistant to targeted treatments, making it harder to treat."
+            "Find out why some cancer cells can stop responding "
+            "to certain treatments."
         )
 
         st.info(
             "**Research Sources**\n\n"
-            "Check out scientific databases and websites where "
-            "you can learn more about EGFR and cancer."
+            "Find the scientific websites and databases used "
+            "for this project."
         )
 
     st.divider()
@@ -194,8 +192,8 @@ elif page == "Mutation Explorer":
     st.title("Mutation Explorer")
 
     st.write(
-        "Not all EGFR mutations are the same. Choose one below "
-        "to learn what it changes and why it matters."
+        "EGFR mutations are not all the same. Pick one below "
+        "to see what changes and why it matters."
     )
 
     selected = st.selectbox(
@@ -228,9 +226,8 @@ elif page == "Mutation Explorer":
     st.divider()
 
     st.caption(
-        "These explanations simplify some complex scientific ideas. "
-        "Treatment responses can vary between tumours and depend "
-        "on several factors."
+        "These explanations are simplified to make the science easier "
+        "to understand. The way a tumour responds to treatment can vary."
     )
 
 # -----------------------------------------
@@ -242,24 +239,26 @@ elif page == "Genomic Data":
     st.title("Genomic Data")
 
     st.write(
-        "Learn from a small research dataset and find out what it can tell us "
-        "about EGFR mutations and treatment resistance."
-    )
-    st.write(
-            "The CSV used here is a short summary of six samples. It is not "
-            "the full genetic sequencing data."
+        "Upload a CSV file to see the data in it. You can look at "
+        "the mutations in the samples and compare their treatment responses."
     )
 
-    st.markdown("### What should your CSV include?")
     st.write(
-        "- `sample_id`: the sample's ID"
-        "\n- `mutation`: the EGFR mutation"
+        "The example CSV for this project has information about six "
+        "research samples. It is not the full genetic sequencing data."
+    )
+
+    st.markdown("### What does the CSV need?")
+
+    st.write(
+        "- `sample_id`: the ID of each sample"
+        "\n- `mutation`: the EGFR mutation found in the sample"
         "\n- `treatment_response`: for example, Sensitive or Resistant"
-        "\n- Extra columns, such as `cell_line` and `treatment`, can add more detail."
+        "\n- Extra columns like `cell_line` and `treatment` give more information."
     )
 
     uploaded_file = st.file_uploader(
-        "Upload your genomic CSV file",
+        "Upload a CSV file",
         type=["csv"]
     )
 
@@ -273,18 +272,26 @@ elif page == "Genomic Data":
 
             if not required_columns.issubset(df.columns):
                 st.error(
-                    "Your file needs both sample_id and mutation columns. "
-                    "Please check the column names and upload it again."
+                    "The file needs both sample_id and mutation columns. "
+                    "Check the column names and try again."
                 )
 
             elif df.empty:
-                st.warning("This dataset is empty. Please upload a file with data.")
+                st.warning(
+                    "This file is empty. Try uploading a CSV with some data."
+                )
 
             else:
-                st.success("Your dataset has been uploaded!")
+                st.success("CSV uploaded successfully!")
 
-                # Clean the main columns so the summaries are easier to read.
-                df["mutation"] = df["mutation"].fillna("Unknown").astype(str).str.strip()
+                # Clean the main columns so the results are easier to read.
+                df["mutation"] = (
+                    df["mutation"]
+                    .fillna("Unknown")
+                    .astype(str)
+                    .str.strip()
+                )
+
                 if "treatment_response" in df.columns:
                     df["treatment_response"] = (
                         df["treatment_response"]
@@ -293,156 +300,215 @@ elif page == "Genomic Data":
                         .str.strip()
                     )
 
-                st.markdown("### 1. Dataset at a glance")
+                # 1. Quick look at the data
+
+                st.markdown("### 1. A quick look at the data")
+
                 col1, col2, col3 = st.columns(3)
-                col1.metric("Total samples", len(df))
-                col2.metric("Different mutation labels", df["mutation"].nunique())
+
+                col1.metric("Number of samples", len(df))
+
+                col2.metric(
+                    "Different mutations",
+                    df["mutation"].nunique()
+                )
+
                 if "treatment_response" in df.columns:
                     col3.metric(
-                        "Response groups",
+                        "Response types",
                         df["treatment_response"].nunique()
                     )
                 else:
-                    col3.metric("Response information", "Not included")
+                    col3.metric("Treatment response", "Not included")
 
                 st.write(
-                    "Each row represents one sample. The mutation and response "
-                    "columns help us compare the samples."
+                    "Each row is one sample. The columns show details "
+                    "about its mutation and treatment response."
                 )
 
-                st.markdown("### 2. Explore the samples")
+                # 2. Sample information
+
+                st.markdown("### 2. Look at the samples")
+
                 display_columns = [
                     col for col in
-                    ["sample_id", "cell_line", "mutation", "treatment_response", "treatment"]
+                    [
+                        "sample_id",
+                        "cell_line",
+                        "mutation",
+                        "treatment_response",
+                        "treatment"
+                    ]
                     if col in df.columns
                 ]
+
                 if display_columns:
-                    # A plain text preview avoids relying on the interactive
-                    # dataframe viewer for this small educational dataset.
                     st.code(
                         df[display_columns].head(20).to_string(index=False),
                         language="text"
                     )
 
-                st.markdown("### 3. Which mutations appear in the dataset?")
+                # 3. Mutation chart
+
+                st.markdown("### 3. Which mutations are in the data?")
+
                 mutation_counts = (
                     df["mutation"]
                     .value_counts()
                     .rename_axis("Mutation")
                     .to_frame("Number of samples")
                 )
+
                 st.bar_chart(mutation_counts)
 
                 most_common = mutation_counts["Number of samples"].max()
+
                 common_mutations = mutation_counts[
                     mutation_counts["Number of samples"] == most_common
                 ].index.tolist()
 
                 if len(common_mutations) == 1:
                     st.write(
-                        f"**What this means:** {common_mutations[0]} is the "
-                        f"most common mutation label in this uploaded dataset, "
-                        f"appearing in {most_common} sample(s)."
+                        f"**What the chart shows:** {common_mutations[0]} "
+                        f"appears the most in this file, with "
+                        f"{most_common} sample(s)."
                     )
                 else:
                     st.write(
-                        f"**What this means:** {', '.join(common_mutations)} "
-                        f"are tied as the most common mutation labels, with "
-                        f"{most_common} sample(s) each."
+                        f"**What the chart shows:** {', '.join(common_mutations)} "
+                        f"appear the most, with {most_common} sample(s) each."
                     )
 
                 st.caption(
-                    "This only describes the samples in your file. It does not "
-                    "show how common these mutations are in all people with lung cancer."
+                    "This only shows the samples in this file. It does not "
+                    "tell us how common these mutations are in all people "
+                    "with lung cancer."
                 )
 
+                # 4. Treatment response
+
                 if "treatment_response" in df.columns:
-                    st.markdown("### 4. Treatment response")
+
+                    st.markdown("### 4. How did the cells respond to treatment?")
+
                     response_data = df[
                         df["treatment_response"].ne("Not recorded")
                     ]
 
                     if not response_data.empty:
+
                         response_table = pd.crosstab(
                             response_data["mutation"],
                             response_data["treatment_response"]
                         )
+
                         st.bar_chart(response_table)
 
                         st.write(
-                            "The chart counts how many samples in each mutation "
-                            "group have each response label."
+                            "This chart shows how many samples in each "
+                            "mutation group were marked as Sensitive "
+                            "or Resistant."
                         )
 
                         response_totals = (
                             response_data["treatment_response"]
                             .value_counts()
                         )
-                        st.write("**Response labels in this file:**")
+
+                        st.write("**Treatment responses in this file:**")
+
                         for label, number in response_totals.items():
                             st.write(f"- {label}: {number} sample(s)")
+
                     else:
                         st.info(
-                            "There are no recorded treatment responses to compare "
-                            "in this dataset."
+                            "There are no treatment response results "
+                            "in this file."
                         )
+
                 else:
                     st.info(
-                        "Your CSV does not have a treatment_response column, "
-                        "so this section cannot compare treatment responses."
+                        "This CSV does not have a treatment_response column, "
+                        "so treatment responses cannot be compared."
                     )
 
+                # 5. Compare cell lines
+
                 if "cell_line" in df.columns:
-                    st.markdown("### 5. Compare related cell lines")
+
+                    st.markdown("### 5. Compare cell lines")
+
                     cell_lines = sorted(
-                        df["cell_line"].dropna().astype(str).unique().tolist()
+                        df["cell_line"]
+                        .dropna()
+                        .astype(str)
+                        .unique()
+                        .tolist()
                     )
+
                     if cell_lines:
+
                         chosen_line = st.selectbox(
                             "Choose a cell line",
                             cell_lines
                         )
+
                         related = df[
                             df["cell_line"].astype(str).str.contains(
-                                chosen_line, case=False, na=False
+                                chosen_line,
+                                case=False,
+                                na=False
                             )
                         ]
+
                         st.write(
-                            f"These row(s) are linked to **{chosen_line}** "
-                            "in the cell_line column:"
+                            f"Here are the samples linked to **{chosen_line}**:"
                         )
+
                         comparison_columns = [
                             col for col in
-                            ["sample_id", "cell_line", "mutation",
-                             "treatment_response", "treatment"]
+                            [
+                                "sample_id",
+                                "cell_line",
+                                "mutation",
+                                "treatment_response",
+                                "treatment"
+                            ]
                             if col in related.columns
                         ]
+
                         st.code(
                             related[comparison_columns].to_string(index=False),
                             language="text"
                         )
+
                         st.write(
-                            "**How to read this:** Some studies compare an original "
-                            "cell line with a version selected to resist a treatment. "
-                            "That comparison can help researchers study resistance."
+                            "Some research studies compare an original cell "
+                            "line with another version that has become resistant "
+                            "to treatment. This helps researchers study why "
+                            "treatments sometimes stop working."
                         )
 
-                st.markdown("### 6. What can we learn from this dataset?")
+                # 6. Main findings
+
+                st.markdown("### 6. What does the data show?")
+
                 st.write(
-                    "This small dataset is useful for seeing that the study includes "
-                    "different EGFR mutation labels and both treatment-sensitive and "
-                    "treatment-resistant cell samples. It gives an example of how "
-                    "researchers can compare cell lines."
+                    "This file has samples with different EGFR mutations. "
+                    "Some cells were sensitive to treatment, while others "
+                    "were resistant. The charts make it easier to compare "
+                    "the samples."
                 )
+
                 st.write(
-                    "However, the dataset alone does not prove which genetic change "
-                    "caused resistance. It also cannot predict how a patient would "
-                    "respond to a treatment."
+                    "However, this small dataset cannot prove which genetic "
+                    "change caused resistance. It also cannot predict how "
+                    "a patient would respond to a treatment."
                 )
 
                 st.caption(
-                    "This is an educational exploration of research data, not a "
-                    "medical tool. Results depend on the file that is uploaded."
+                    "This is a student science project, not a medical tool. "
+                    "The results depend on the CSV file that is uploaded."
                 )
 
         except Exception as error:
@@ -450,8 +516,8 @@ elif page == "Genomic Data":
 
     else:
         st.info(
-            "Upload a CSV file to explore its samples, mutations and treatment "
-            "response information. No patient data is included in this app."
+            "Upload a CSV file to see the samples, mutations and treatment "
+            "responses. This project uses research cell samples, not patient data."
         )
 
 # -----------------------------------------
@@ -463,13 +529,13 @@ elif page == "Treatment Resistance":
     st.title("Treatment Resistance")
 
     st.write(
-        "Targeted treatments are designed to block specific changes "
-        "in cancer cells. But sometimes, these cells find ways around "
-        "the treatment. This is called treatment resistance."
+        "Some cancer treatments are made to block changes in cancer cells. "
+        "But sometimes, the cells find ways around the treatment. "
+        "This is called treatment resistance."
     )
 
     selected = st.selectbox(
-        "Choose a mutation to explore",
+        "Choose a mutation to learn more",
         list(MUTATIONS.keys())
     )
 
@@ -479,22 +545,20 @@ elif page == "Treatment Resistance":
 
     st.write(mutation["resistance"])
 
-    st.subheader("Why does treatment resistance happen?")
+    st.subheader("Why can this happen?")
 
     st.markdown("""
     1. EGFR mutations can change how the EGFR protein works.
-    2. Targeted treatments try to block the signals that tell cancer
-       cells to grow.
-    3. Sometimes, cancer cells develop extra genetic changes that
-       help them keep growing despite the treatment.
-    4. Researchers study these changes to understand why treatments
-       stop working and how new treatment options might be developed.
+    2. Targeted treatments try to block signals that tell cancer cells to grow.
+    3. Sometimes, cancer cells develop other genetic changes that help
+       them keep growing even when treatment is being used.
+    4. Researchers study these changes to understand why treatments stop
+       working and how new treatments could be developed.
     """)
 
     st.warning(
         "This section explains how treatment resistance can happen. "
-        "It does not predict whether a specific tumour will respond "
-        "to a treatment."
+        "It cannot predict if a specific tumour will respond to treatment."
     )
 
 # -----------------------------------------
@@ -506,14 +570,13 @@ elif page == "Research Sources":
     st.title("Research Sources")
 
     st.write(
-        "I used scientific resources to explore EGFR mutations "
-        "and understand their connection to lung cancer. "
-        "You can also visit these websites to find more information "
-        "and check scientific data."
+        "These are some of the scientific websites and databases used "
+        "to learn about EGFR mutations and lung cancer. They are also "
+        "useful if you want to find out more about the topic."
     )
 
     st.markdown("""
-    ### Scientific databases
+    ### Scientific websites and databases
 
     - [NCBI Gene – EGFR](https://www.ncbi.nlm.nih.gov/gene/1956)
     - [ClinVar – Genetic variants](https://www.ncbi.nlm.nih.gov/clinvar/)
@@ -526,9 +589,8 @@ elif page == "Research Sources":
     """)
 
     st.info(
-        "Scientific information can be complex, so it is important "
-        "to check reliable sources and compare information before "
-        "making conclusions."
+        "It is always important to check where scientific information "
+        "comes from and use reliable sources."
     )
 
 # -----------------------------------------
