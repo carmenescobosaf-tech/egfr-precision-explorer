@@ -242,19 +242,9 @@ elif page == "Genomic Data":
     st.title("Genomic Data")
 
     st.write(
-        "Explore a small research dataset and find out what it can tell us "
+        "Learn from a small research dataset and find out what it can tell us "
         "about EGFR mutations and treatment resistance."
     )
-
-    with st.expander("Where does this example dataset come from?"):
-        st.write(
-            "The example CSV is based on study GSE156054, shared on NCBI GEO. "
-            "The study looked at EGFR-mutated lung cancer cells and compared "
-            "original cell lines with versions selected for treatment resistance."
-        )
-        st.markdown(
-            "[View the original study on NCBI GEO]"
-            "(https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE156054)"
         )
         st.write(
             "The CSV used here is a short summary of six samples. It is not "
